@@ -1,0 +1,42 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<div class="text-center">
+
+    <input autofocus id="txt" type="text" class="form-control text-center" oninput="this.value=this.value.toUpperCase()" />
+    <br />
+  
+<button id="btn" class="btn btn-primary ">Generate</button>
+
+
+<div id="main" class="text-center" style="text-align:center">
+
+</div>
+<br />
+<button id="btn-print" onclick="printQr()" class="btn btn-success" style="display:none">Print QR Code</button>
+</div>
+@section Scripts {
+<script>
+
+
+    $("#btn").click(function(){
+
+$.get("/Home/Qr",{str:$("#txt").val()},function(d){
+
+    $("#main").empty().append(d);
+    $("#btn-print").show();
+
+})
+
+    })
+
+
+    function printQr(){
+     var printContents = document.getElementById("main").innerHTML;
+     var originalContents = document.body.innerHTML;
+     document.body.innerHTML = printContents;
+     window.print();
+     document.body.innerHTML = originalContents;
+    }
+</script>
+}
